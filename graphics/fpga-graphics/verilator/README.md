@@ -34,6 +34,14 @@ cmake -S . -B build -DCMAKE_BUILD_TYPE=MinSizeRel
 cmake --build build
 ```
 
+Run one of the executables:
+
+```bash
+ ./build/top
+ ./build/beam
+ ./build/bounce
+```
+
 ### Build Top Square Without CMake
 
 ```bash
