@@ -44,6 +44,8 @@ int main(int argc, char* argv[]) {
         printf("Renderer creation failed: %s\n", SDL_GetError());
         return 1;
     }
+    Uint32 windowFormat = SDL_GetWindowPixelFormat(sdl_window);
+    printf("Window pixel format: %s\n", SDL_GetPixelFormatName(windowFormat));
 
     sdl_texture = SDL_CreateTexture(sdl_renderer, SDL_PIXELFORMAT_ARGB8888,
         SDL_TEXTUREACCESS_TARGET, H_RES, V_RES);
