@@ -67,7 +67,7 @@ int main(int argc, char* argv[]) {
     top->eval();
 
     uint64_t frame_count = 0;
-    uint64_t start = SDL_GetPerformanceCounter();
+    uint64_t start_ticks = SDL_GetPerformanceCounter();
     while (1) {
         // cycle the clock
         top->clk_pix = 1;
@@ -101,8 +101,8 @@ int main(int argc, char* argv[]) {
             frame_count++;
         }
     }
-    uint64_t end = SDL_GetPerformanceCounter();
-    double duration = ((double)(end-start))/SDL_GetPerformanceFrequency();
+    uint64_t end_ticks = SDL_GetPerformanceCounter();
+    double duration = ((double)(end_ticks-start_ticks))/SDL_GetPerformanceFrequency();
     double fps = (double)frame_count/duration;
     printf("Frames per second: %.1f\n", fps);
 
