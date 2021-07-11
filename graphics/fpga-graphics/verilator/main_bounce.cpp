@@ -44,14 +44,17 @@ int main(int argc, char* argv[]) {
         printf("Renderer creation failed: %s\n", SDL_GetError());
         return 1;
     }
-    Uint32 windowFormat = SDL_GetWindowPixelFormat(sdl_window);
-    printf("Window pixel format: %s\n", SDL_GetPixelFormatName(windowFormat));
 
     sdl_texture = SDL_CreateTexture(sdl_renderer, SDL_PIXELFORMAT_ARGB8888,
         SDL_TEXTUREACCESS_TARGET, H_RES, V_RES);
     if (!sdl_texture) {
         printf("Texture creation failed: %s\n", SDL_GetError());
         return 1;
+    }
+
+    Uint32 windowPixelFormat = SDL_GetWindowPixelFormat(sdl_window);
+    if (windowPixelFormat != SDL_PIXELFORMAT_ARGB8888) {
+        printf("Window pixel format differs from render pixel format: %s\n", SDL_GetPixelFormatName(windowPixelFormat));
     }
 
     // initialize Verilog module
