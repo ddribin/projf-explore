@@ -61,7 +61,7 @@ int main(int argc, char* argv[]) {
     top->rst = 0;
     top->eval();
 
-    uint64_t frame_count;
+    uint64_t frame_count = 0;
     uint64_t start = SDL_GetPerformanceCounter();
     while (1) {
         // cycle the clock
