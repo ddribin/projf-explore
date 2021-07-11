@@ -61,6 +61,8 @@ int main(int argc, char* argv[]) {
     top->rst = 0;
     top->eval();
 
+    uint64_t frame_count;
+    uint64_t start = SDL_GetPerformanceCounter();
     while (1) {
         // cycle the clock
         top->clk_pix = 1;
@@ -91,8 +93,13 @@ int main(int argc, char* argv[]) {
             SDL_RenderClear(sdl_renderer);
             SDL_RenderCopy(sdl_renderer, sdl_texture, NULL, NULL);
             SDL_RenderPresent(sdl_renderer);
+            frame_count++;
         }
     }
+    uint64_t end = SDL_GetPerformanceCounter();
+    double duration = ((double)(end-start))/SDL_GetPerformanceFrequency();
+    double fps = (double)frame_count/duration;
+    printf("Frames per second: %.1f\n", fps);
 
     top->final();  // simulation done
 

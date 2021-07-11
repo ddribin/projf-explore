@@ -20,7 +20,7 @@ cd projf-explore/graphics/fpga-graphics/verilator
 
 ### Build All With CMake
 
-Build a `Debug` configuration:
+Build a `Debug` configuration, with optimizations disabled:
 
 ```bash
 cmake -S . -B build
@@ -67,6 +67,7 @@ To build the simulations, you need:
 1. C++ Toolchain
 2. Verilator
 3. SDL
+4. CMake
 
 The simulations should work on any modern platform, but I've confined my instructions to Linux and macOS. Windows installation depends on your choice of compiler, but the sims should work fine there too. For advice on SDL development on Windows, see [Lazy Foo' - Setting up SDL on Windows](https://lazyfoo.net/tutorials/SDL/01_hello_SDL/windows/index.php).
 
