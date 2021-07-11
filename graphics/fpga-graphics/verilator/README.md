@@ -4,7 +4,7 @@ This folder contains Verilator simulations to accompany the Project F blog post:
 
 If you're new to graphics simulations check out **[Verilog Simulation with Verilator and SDL](https://projectf.io/posts/verilog-sim-verilator-sdl/)**.
 
-[Verilator](https://www.veripool.org/verilator/) creates C++ simulations of Verilog designs, while [SDL](https://www.libsdl.org) produces simple cross-platform graphics applications. By combining the two, you can simulate your design without needing an FPGA. Verilator is fast, but it's still much slower than an FPGA. For these single-threaded designs, you can expect around one frame per second on a modern PC.
+[Verilator](https://www.veripool.org/verilator/) creates C++ simulations of Verilog designs, while [SDL](https://www.libsdl.org) produces simple cross-platform graphics applications. By combining the two, you can simulate your design without needing an FPGA. Verilator is fast, but it's still much slower than an FPGA. For these single-threaded designs, you can expect around 60 frames per second on a modern PC, with optimizations enabled.
 
 ![](../../../doc/img/top-bounce-verilator-sdl.png?raw=true "")
 
@@ -18,26 +18,42 @@ Then navigate to the Verilator directory:
 cd projf-explore/graphics/fpga-graphics/verilator
 ```
 
-### Top Square
+### Build All With CMake
+
+Build a `Debug` configuration:
 
 ```bash
-verilator -I../ -cc top_square.sv --exe main_square.cpp -LDFLAGS "`sdl2-config --libs`"
+cmake -S . -B build
+cmake --build build
+```
+
+But for best performance use the `Release` or `MinSizeRel` configuration to build with optimizations:
+
+```bash
+cmake -S . -B build -DCMAKE_BUILD_TYPE=MinSizeRel
+cmake --build build
+```
+
+### Build Top Square Without CMake
+
+```bash
+verilator -I../ -cc top_square.sv --exe main_square.cpp -CFLAGS "$(sdl2-config --cflags)" -LDFLAGS "$(sdl2-config --libs)"
 make -C ./obj_dir -f Vtop_square.mk
 ./obj_dir/Vtop_square
 ```
 
-### Top Beam
+### Build Top Beam Without CMake
 
 ```bash
-verilator -I../ -cc top_beam.sv --exe main_beam.cpp -LDFLAGS "`sdl2-config --libs`"
+verilator -I../ -cc top_beam.sv --exe main_beam.cpp -CFLAGS "$(sdl2-config --cflags)" -LDFLAGS "$(sdl2-config --libs)"
 make -C ./obj_dir -f Vtop_beam.mk
 ./obj_dir/Vtop_beam
 ```
 
-### Top Bounce
+### Build Top Bounce Without CMake
 
 ```bash
-verilator -I../ -cc top_bounce.sv --exe main_bounce.cpp -LDFLAGS "`sdl2-config --libs`"
+verilator -I../ -cc top_bounce.sv --exe main_bounce.cpp -CFLAGS "$(sdl2-config --cflags)" -LDFLAGS "$(sdl2-config --libs)"
 make -C ./obj_dir -f Vtop_bounce.mk
 ./obj_dir/Vtop_bounce
 ```
@@ -65,11 +81,11 @@ apt update
 apt install build-essential
 ```
 
-Install packages for Verilator and the dev version of SDL:
+Install packages for Verilator, the dev version of SDL, and CMake:
 
 ```bash
 apt update
-apt install verilator libsdl2-dev
+apt install verilator libsdl2-dev cmake
 ```
 
 That's it!
@@ -85,7 +101,7 @@ Install the [Homebrew](https://brew.sh/) package manager.
 With Homebrew installed, you can run:
 
 ```bash
-brew install verilator sdl2
+brew install verilator sdl2 cmake
 ```
 
 And you're ready to go.
