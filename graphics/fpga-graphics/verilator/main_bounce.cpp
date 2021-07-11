@@ -3,7 +3,7 @@
 // Learn more at https://projectf.io
 
 #include <stdio.h>
-#include <SDL2/SDL.h>
+#include <SDL.h>
 #include <verilated.h>
 #include "Vtop_bounce.h"
 
@@ -39,7 +39,7 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    sdl_renderer = SDL_CreateRenderer(sdl_window, -1, SDL_RENDERER_ACCELERATED);
+    sdl_renderer = SDL_CreateRenderer(sdl_window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
     if (!sdl_renderer) {
         printf("Renderer creation failed: %s\n", SDL_GetError());
         return 1;
@@ -62,14 +62,6 @@ int main(int argc, char* argv[]) {
     top->eval();
 
     while (1) {
-        // check for quit event
-        SDL_Event e;
-        if (SDL_PollEvent(&e)) {
-            if (e.type == SDL_QUIT) {
-                break;
-            }
-        }
-
         // cycle the clock
         top->clk_pix = 1;
         top->eval();
@@ -87,6 +79,14 @@ int main(int argc, char* argv[]) {
 
         // update texture once per frame at start of blanking
         if (top->sy == V_RES && top->sx == 0) {
+            // check for quit event
+            SDL_Event e;
+            if (SDL_PollEvent(&e)) {
+                if (e.type == SDL_QUIT) {
+                    break;
+                }
+            }
+
             SDL_UpdateTexture(sdl_texture, NULL, screenbuffer, H_RES*sizeof(Pixel));
             SDL_RenderClear(sdl_renderer);
             SDL_RenderCopy(sdl_renderer, sdl_texture, NULL, NULL);
