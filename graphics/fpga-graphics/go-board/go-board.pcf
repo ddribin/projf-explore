@@ -1,0 +1,18 @@
+set_io clk_25m 15
+
+set_io btn_rst 53
+
+set_io vga_hsync 26
+set_io vga_vsync 27
+
+set_io vga_r[0] 36
+set_io vga_r[1] 37
+set_io vga_r[2] 40
+
+set_io vga_g[0] 29
+set_io vga_g[1] 30
+set_io vga_g[2] 33
+
+set_io vga_b[0] 28
+set_io vga_b[1] 41
+set_io vga_b[2] 42
